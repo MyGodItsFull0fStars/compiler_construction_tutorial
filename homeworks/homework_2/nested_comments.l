@@ -15,7 +15,8 @@ whitespace      [ \t\n]
 paranthesis     "("|")"
 bracket         "["|"]"
 newline         "\n"
-comment         (\{.+\})
+comment         (\{.+\}) 
+modula          ("(*".+"*)")
 
 %%
 
@@ -30,15 +31,30 @@ comment         (\{.+\})
 [\n]+        {
     printf("\n");
 }
-{comment}   {
+
+
+
+{comment}  {
     transform_comment(yytext);
     comment_count++;
+    printf("%s\n", yytext);
 
     int comment_nesting_level = get_comment_nesting_level(yytext);
     if (max_nesting_level < comment_nesting_level)
         max_nesting_level = comment_nesting_level;
-    
-    printf("%s", yytext);
+
+    printf("Nest level: %d\n", comment_nesting_level);
+}
+
+{modula} {
+    comment_count++;
+    printf("%s\n", yytext);
+
+    int comment_nesting_level = get_comment_nesting_level(yytext);
+    if (max_nesting_level < comment_nesting_level)
+        max_nesting_level = comment_nesting_level;
+
+    printf("Nest level: %d\n", comment_nesting_level);
 }
 
 uses | 
@@ -105,15 +121,11 @@ int get_comment_nesting_level(char data[])
         if (data[i] == '(' && data[i+1] == '*')
         {
             num_left_paranthesis++;
-            i += 2;
-            continue;
         }
 
         else if (data[i] == '*' && data[i+1] == ')')
         {
             num_right_parantheis++;
-            i += 2;
-            continue;
         }
         i++;
     }
@@ -135,7 +147,8 @@ void transform_comment(char comment[]){
 int main(int argv, char *argc[])
 {
     yylex();
-    printf("Max Nesting Level: %d", max_nesting_level);
+    printf("Number of Comments: %d\n", comment_count);
+    printf("Max Nesting Level: %d\n", max_nesting_level);
     return 0;
 }
 
