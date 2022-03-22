@@ -106,7 +106,7 @@ program minipas;
 
 { Main program }
 
-(* (* nested comment *) *)
+
 
 begin
 
