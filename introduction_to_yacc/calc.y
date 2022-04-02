@@ -2,7 +2,7 @@
     void yyerror (char *s);
     #include <stdio.h>
     #include <stdlib.h>
-    int symbols[52];
+    int symbols[52]; // [a-zA-Z]
     int symbol_val(char symbol);
     void update_symbol_val(char symbol, int val);
 %}
