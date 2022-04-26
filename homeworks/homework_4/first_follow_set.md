@@ -69,7 +69,7 @@
 
 ## Production Rules
 
-### ```start -> PROGRAM IDENT ; varDecl subProgList compStmt .```
+### ```start -> PROGRAM IDENT ; varDec subProgList compStmt .```
 
 `FIRST := { PROGRAM }`
 
@@ -79,13 +79,13 @@
 
 `FIRST := { VAR }`
 
-`FOLLOW := { }`
+`FOLLOW := { FUNCTION, PROCEDURE, BEGIN }`
 
 ### ```varDecList -> identListType ; varDecList'```
 
 `FIRST := { IDENT }`
 
-`FOLLOW := { }`
+`FOLLOW := { FUNCTION, PROCEDURE, BEGIN }`
 
 ### ```varDecList' -> identListType ; varDecList' | @"```
 
@@ -109,7 +109,7 @@
 
 `FIRST := { , }`
 
-`FOLLOW := { }`
+`FOLLOW := { :,  }`
 
 ### ```type -> simpleType | ARRAY [ NUM .. NUM ] OF simpleType```
 
@@ -151,6 +151,8 @@
 
 ### ```parList -> identListType parList'```
 
+`EBNF := parList -> identListType { ; identListType }`
+
 `FIRST := { IDENT }`
 
 `FOLLOW := { }`
@@ -171,7 +173,7 @@
 
 `FIRST := { IDENT, BEGIN, IF, WHILE }`
 
-`FOLLOW := { }`
+`FOLLOW := { ; }`
 
 ### ```stmtList' -> ; statement stmtList' | @```
 
@@ -240,6 +242,8 @@
 `FOLLOW := { }`
 
 ### ```exprList -> expr exprList'```
+
+`EBNF := exprList -> expr {, expr}`
 
 `FIRST := { NUM, FALSE, TRUE, IDENT, NOT, -, ( }`
 
