@@ -40,7 +40,7 @@ int main(void)
         case PORT:
             if (value_token != INTEGER)
             {
-                printf("Syntax error in line %d, Expected an integer but found %s\n", yylineno, yytext);
+                printf("Syntax error in line %d, Expected an .integer but found %s\n", yylineno, yytext);
                 return 1;
             }
             printf("%s is set to %s\n", names[n_token], yytext);

@@ -1,0 +1,12 @@
+{
+    "Start": "S",
+    "Terminals" : ["(", ")", "&", "a", "b", "c", "program"],
+    "Non Terminals": ["S", "A", "E", "T"],
+    "Production Rules":
+        [
+            "S->(A)|@",
+            "A->program TE",
+            "E->&TE|@",
+            "T->|a|b|c"
+        ]
+}
