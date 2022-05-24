@@ -55,21 +55,21 @@
 %token AND 
 
 %union {
-    N_STMT statement; 
-    N_WHILE while_stmt;
+    struct N_STMT statement_type; 
+    struct N_WHILE while_stmt;
 } 
 
 %type <while_stmt> whileStmt
+%type <statement_type> statement 
 
 
-%start start
+%start mulOp
 
 %%
 
 /* 
 start -> PROGRAM IDENT ; varDec subProgList compStmt . */
-start           : PROGRAM IDENT SEMICOLON varDec subProgList compStmt DOT       { ast = ...;
-return ast;}    
+start           : PROGRAM IDENT SEMICOLON varDec subProgList compStmt DOT           
                 ;
 
 varDec          : VAR varDecList
@@ -246,7 +246,6 @@ mulOp           : MULT                                  { $$ = MULT_OP; }
 
 %%
 int main(void) { 
-    yyparse(); 
-    printf(ast);
+    yyparse();
     }
 int yyerror(char *s) { fprintf(stderr, "%s\n", s); return 0; }
